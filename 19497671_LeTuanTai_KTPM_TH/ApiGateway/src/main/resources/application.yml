@@ -6,10 +6,10 @@ spring:
     gateway:
       routes:
       - id: billingService
-        uri: http://192.168.1.5:8080/
+        uri: http://localhost:8081/
         predicates:
         - Path=/billing/**
       - id: passengerService
-        uri: http://192.168.1.5:8081/
+        uri: http://localhost:8082/
         predicates:
-        - Path=/perssengers/**
+        - Path=/perssenger/**
