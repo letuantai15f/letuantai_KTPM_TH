@@ -8,6 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,7 +36,9 @@ public class PerssengerImlp implements PerssengerService {
 	}
 
 	@Override
+	@Retryable(value = Exception.class, maxAttempts = 10,backoff = @Backoff(value = 1000))
 	public String findPerssengerId(int id) {
+		 System.out.println("Start get Billing By Passenger");
 		 HttpHeaders headers = new HttpHeaders();
 		 headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		 HttpEntity <String> entity = new HttpEntity<String>(headers);
